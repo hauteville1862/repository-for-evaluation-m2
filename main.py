@@ -1,89 +1,67 @@
 import json
-
-# 1. 파일 열기 ("r"은 Read, 읽겠다는 뜻)
-file = open("data.json", "r")
-
-# 2. 종이에 적힌 내용을 파이썬이 이해하는 데이터(딕셔너리)로 바꾸기
-data = json.load(file)
-
-# 3. 그중에서 "high_score"라는 이름의 숫자를 가져와서 변수에 담기
-high_score = data["high_score"]
-
-# 4. 다 읽었으니 파일 닫기
-file.close()
-
-print(f"현재 최고 점수는 {high_score}점입니다!")
-
-
 from question_model import Question
+from quiz_brain import QuizBrain
 from quiz_data import question_data
 
-# 0. 환영 인사 출력 (여기에 추가!)
-print("=" * 50)
-print("         📖 세계 문학 거장 퀴즈 📖         ")
-print("      정답은 'True' 또는 'False'로 입력하세요.      ")
-print("=" * 50)
-print() # 한 줄 띄우기
+def load_data():
+    try:
+        # 기준: state.json 사용 및 UTF-8 인코딩
+        with open("state.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"high_score": 0, "questions": question_data}
 
+def save_data(data):
+    with open("state.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
-# 1. 문제 객체들을 담을 빈 리스트를 만듭니다.
-question_bank = []
-
-# 2. 반복문을 통해 데이터를 객체로 변환합니다.
-for question in question_data:
-    q_text = question["text"]
-    q_answer = question["answer"]
+def main():
+    data = load_data()
     
-    # 설계도(Question)를 이용해 실제 문제 객체를 생성합니다.
-    new_question = Question(q_text, q_answer)
-    
-    # 생성된 객체를 리스트에 추가합니다.
-    question_bank.append(new_question)
+    while True:
+        print("\n=== 📚 세계 문학 퀴즈 프로그램 ===")
+        print("1. 퀴즈 풀기")
+        print("2. 퀴즈 등록")
+        print("3. 퀴즈 목록")
+        print("4. 최고 점수 확인")
+        print("5. 종료")
+        choice = input("메뉴를 선택하세요: ")
 
-# 3. 잘 만들어졌는지 확인해볼까요?
-print(f"총 {len(question_bank)}개의 문제가 준비되었습니다!")
-print(f"첫 번째 문제 내용: {question_bank[0].text}")
+        if choice == "1":
+            # 퀴즈 풀기 로직
+            question_bank = [Question(q["text"], q["answer"]) for q in data["questions"]]
+            quiz = QuizBrain(question_bank)
+            while quiz.still_has_questions():
+                quiz.next_question()
+            
+            print(f"\n게임 종료! 최종 점수: {quiz.score}/{quiz.question_number}")
+            if quiz.score > data["high_score"]:
+                data["high_score"] = quiz.score
+                print(f"🎊 최고 점수 갱신: {data['high_score']}점!")
+                save_data(data)
 
-from question_model import Question
-from quiz_data import question_data
-from quiz_brain import QuizBrain # 1. QuizBrain 가져오기
+        elif choice == "2":
+            # 퀴즈 등록 로직
+            text = input("새로운 퀴즈 내용을 입력하세요: ")
+            answer = input("정답을 입력하세요 (True/False): ")
+            data["questions"].append({"text": text, "answer": answer})
+            save_data(data)
+            print("✅ 퀴즈가 성공적으로 등록되었습니다.")
 
-question_bank = []
-for question in question_data:
-    q_text = question["text"]
-    q_answer = question["answer"]
-    new_question = Question(q_text, q_answer)
-    question_bank.append(new_question)
+        elif choice == "3":
+            # 퀴즈 목록 보기
+            print("\n--- 등록된 퀴즈 목록 ---")
+            for i, q in enumerate(data["questions"], 1):
+                print(f"{i}. {q['text']} (정답: {q['answer']})")
 
-# 2. 퀴즈 두뇌 객체 생성
-quiz = QuizBrain(question_bank)
+        elif choice == "4":
+            print(f"\n🏆 현재 최고 점수: {data['high_score']}점")
 
-# 3. 남은 문제가 있다면 계속 퀴즈 내기
-while quiz.still_has_questions():
-    quiz.next_question()
+        elif choice == "5":
+            print("프로그램을 종료합니다. 안녕히 가세요!")
+            break
+        else:
+            print("잘못된 선택입니다. 다시 입력해주세요.")
 
-print("퀴즈가 모두 끝났습니다!")
-print(f"최종 점수: {quiz.score}/{quiz.question_number}")
-
-# (게임이 끝난 시점이라고 가정)
-current_score = quiz.score 
-
-if current_score > high_score:
-    print("최고 기록 경신!")
-    
-    # 1. 새로 저장할 데이터 만들기
-    new_data = {"high_score": current_score}
-    
-    # 2. 파일 열기 ("w"는 Write, 새로 쓰겠다는 뜻)
-    file = open("data.json", "w")
-    
-    # 3. 파일을 종이에 받아 적기
-    json.dump(new_data, file)
-    
-    # 4. 파일 닫기
-    file.close()
-
-# main.py 맨 마지막 부분에 추가
-print("\n" + "="*50)
-print("      🎮 GAME OVER - 이용해 주셔서 감사합니다! 🎮")
-print("="*50)
+if __name__ == "__main__":
+    main()
