@@ -18,3 +18,24 @@ for question in question_data:
 # 3. 잘 만들어졌는지 확인해볼까요?
 print(f"총 {len(question_bank)}개의 문제가 준비되었습니다!")
 print(f"첫 번째 문제 내용: {question_bank[0].text}")
+
+from question_model import Question
+from quiz_data import question_data
+from quiz_brain import QuizBrain # 1. QuizBrain 가져오기
+
+question_bank = []
+for question in question_data:
+    q_text = question["text"]
+    q_answer = question["answer"]
+    new_question = Question(q_text, q_answer)
+    question_bank.append(new_question)
+
+# 2. 퀴즈 두뇌 객체 생성
+quiz = QuizBrain(question_bank)
+
+# 3. 남은 문제가 있다면 계속 퀴즈 내기
+while quiz.still_has_questions():
+    quiz.next_question()
+
+print("퀴즈가 모두 끝났습니다!")
+print(f"최종 점수: {quiz.score}/{quiz.question_number}")
