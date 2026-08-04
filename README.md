@@ -14,7 +14,7 @@
 - **지식의 보편성**: 세계 문학은 시대를 초월하여 사랑받는 주제이며, 퀴즈를 통해 상식을 점검하기에 적합합니다.
 - **데이터 확장성**: 작가, 작품명, 연도 등 다양한 형태의 문제를 구성하기 용이하여 추후 기능 확장(4지선다 등)에 유리합니다.
 - **학습 효과**: 퀴즈를 푸는 과정에서 자연스럽게 문학적 소양을 쌓을 수 있도록 기획하였습니다.
-- 현재 등록된 기본 문항 수: **[TODO: 실제 문항 수 입력, 5개 이상]**
+- 현재 등록된 기본 문항 수: 5개
 
 ## 3. 실행 방법
 
@@ -71,23 +71,26 @@ python main.py
 
 ## 7. Git 관리 기록
 
-- **사용한 기본 명령어**: `init`, `add`, `commit`, `push`, `pull`, `checkout`, `clone` — 각 1회 이상 사용
-  - `init`: **[TODO: 저장소 초기화 시점]**
-  - `add` / `commit`: 기능 단위로 10회 이상 커밋 (`Feat:`, `Fix:`, `Docs:`, `Refactor:` 접두사 사용)
-  - `push` / `pull`: **[TODO: 원격 저장소 반영 시점 및 clone 실습 시 pull 사용 시점]**
-  - `checkout`: `feature-ui` 브랜치 생성 시 사용
-- **브랜치 전략**: `feature-ui` 브랜치를 생성하여 독립적으로 UI 개선 작업을 진행한 후, `main` 브랜치에 병합(merge)
+- **사용한 기본 명령어**: `init`, `add`, `commit`, `push`, `pull`, `checkout`, `clone`
+  - `init`: 최초 커밋(`ad6f163 README 생성`) 이전에 로컬 저장소 초기화
+  - `add` / `commit`: 총 17개 커밋으로 기능 단위 작업 진행
+    (`.gitignore`/`README` 생성 → 클래스 설계 → 퀴즈 데이터 → 메뉴 로직 → UI 개선 → README 보완)
+  - `checkout`: `feature-ui` 브랜치 생성 시 사용 (`b8081bd`)
+  - `push`: `origin/main`에 반영 완료 (`1633744`까지). 이후 로컬에서 작업한 최신 커밋(`fef6e16`)은 **[TODO: push 완료 후 커밋 해시 갱신]**
+  - `pull`: **[TODO: 미션 13번 clone 실습에서 사용한 pull 기록 추가]**
+- **브랜치 전략**: `feature-ui` 브랜치를 생성하여 UI 개선 작업(`39cd205`, `b8081bd`)을 진행
+  - **[TODO: `feature-ui` → `main` merge 절차 수행 후 병합 커밋 정보 추가. 현재 로그(`git log --oneline --graph --all`)에는 병합 지점이 나타나지 않아 확인 필요]**
 - **커밋 메시지 예시**
-  ```
+```
   Feat: 퀴즈 출제 기능 구현
   Fix: 점수 계산 오류 수정
   Docs: README 실행 방법 추가
   Refactor: QuizGame 책임 분리
-  ```
+```
 
 ## 8. 제출물 체크리스트
 
-- [ ] GitHub 저장소 URL
+- [x] GitHub 저장소 URL
 - [ ] 개발 환경 설정 스크린샷 (VSCode, Python 버전, Git 설정)
 - [ ] 프로그램 실행 결과 스크린샷 (퀴즈 추가/목록/플레이/점수)
 - [ ] `git log --oneline --graph` 결과 스크린샷
