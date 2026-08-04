@@ -1,6 +1,14 @@
 from question_model import Question
 from quiz_data import question_data
 
+# 0. 환영 인사 출력 (여기에 추가!)
+print("=" * 50)
+print("         📖 세계 문학 거장 퀴즈 📖         ")
+print("      정답은 'True' 또는 'False'로 입력하세요.      ")
+print("=" * 50)
+print() # 한 줄 띄우기
+
+
 # 1. 문제 객체들을 담을 빈 리스트를 만듭니다.
 question_bank = []
 
