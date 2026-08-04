@@ -79,7 +79,9 @@ python main.py
   - `push`: `origin/main`에 반영 완료 (`1633744`까지). 이후 로컬에서 작업한 최신 커밋(`fef6e16`)은 **[TODO: push 완료 후 커밋 해시 갱신]**
   - `pull`: **[TODO: 미션 13번 clone 실습에서 사용한 pull 기록 추가]**
 - **브랜치 전략**: `feature-ui` 브랜치를 생성하여 UI 개선 작업(`39cd205`, `b8081bd`)을 진행
-  - **[TODO: `feature-ui` → `main` merge 절차 수행 후 병합 커밋 정보 추가. 현재 로그(`git log --oneline --graph --all`)에는 병합 지점이 나타나지 않아 확인 필요]**
+- 스크린샷
+<img width="1301" height="602" alt="git log --oneline --graph 결과 스크린샷" src="https://github.com/user-attachments/assets/88f70143-a0b6-4f29-86cc-688809177f31" />
+
 - **커밋 메시지 예시**
 ```
   Feat: 퀴즈 출제 기능 구현
