@@ -95,4 +95,4 @@ python main.py
 - [x] GitHub 저장소 URL
 - [ ] 개발 환경 설정 스크린샷 (VSCode, Python 버전, Git 설정)
 - [ ] 프로그램 실행 결과 스크린샷 (퀴즈 추가/목록/플레이/점수)
-- [ ] `git log --oneline --graph` 결과 스크린샷
+- [x] `git log --oneline --graph` 결과 스크린샷
