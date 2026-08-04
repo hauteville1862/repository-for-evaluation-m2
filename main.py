@@ -82,3 +82,8 @@ if current_score > high_score:
     
     # 4. 파일 닫기
     file.close()
+
+# main.py 맨 마지막 부분에 추가
+print("\n" + "="*50)
+print("      🎮 GAME OVER - 이용해 주셔서 감사합니다! 🎮")
+print("="*50)
