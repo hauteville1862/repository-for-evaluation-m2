@@ -1,3 +1,20 @@
+import json
+
+# 1. 파일 열기 ("r"은 Read, 읽겠다는 뜻)
+file = open("data.json", "r")
+
+# 2. 종이에 적힌 내용을 파이썬이 이해하는 데이터(딕셔너리)로 바꾸기
+data = json.load(file)
+
+# 3. 그중에서 "high_score"라는 이름의 숫자를 가져와서 변수에 담기
+high_score = data["high_score"]
+
+# 4. 다 읽었으니 파일 닫기
+file.close()
+
+print(f"현재 최고 점수는 {high_score}점입니다!")
+
+
 from question_model import Question
 from quiz_data import question_data
 
@@ -47,3 +64,21 @@ while quiz.still_has_questions():
 
 print("퀴즈가 모두 끝났습니다!")
 print(f"최종 점수: {quiz.score}/{quiz.question_number}")
+
+# (게임이 끝난 시점이라고 가정)
+current_score = quiz.score 
+
+if current_score > high_score:
+    print("최고 기록 경신!")
+    
+    # 1. 새로 저장할 데이터 만들기
+    new_data = {"high_score": current_score}
+    
+    # 2. 파일 열기 ("w"는 Write, 새로 쓰겠다는 뜻)
+    file = open("data.json", "w")
+    
+    # 3. 파일을 종이에 받아 적기
+    json.dump(new_data, file)
+    
+    # 4. 파일 닫기
+    file.close()
