@@ -1,27 +1,38 @@
 class QuizBrain:
     def __init__(self, q_list):
-        self.question_number = 0  # 현재 몇 번째 문제인지
-        self.score = 0            # 현재 점수
-        self.question_list = q_list # 전달받은 문제 리스트
+        self.question_number = 0
+        self.score = 0
+        self.question_list = q_list
 
-    # 아직 남은 문제가 있는지 확인하는 함수
     def still_has_questions(self):
         return self.question_number < len(self.question_list)
 
-    # 다음 문제를 내는 함수
     def next_question(self):
         current_question = self.question_list[self.question_number]
         self.question_number += 1
-        user_answer = input(f"Q.{self.question_number}: {current_question.text} (True/False): ")
+        
+        print(f"\nQ.{self.question_number}: {current_question.text}")
+        
+        # 보기 출력 (1. 보기1, 2. 보기2...)
+        for i, choice in enumerate(current_question.choices):
+            print(f"   {i + 1}) {choice}")
+
+        # 사용자 입력 및 유효성 검사
+        user_answer = ""
+        while user_answer not in ["1", "2", "3", "4"]:
+            user_answer = input("\n정답을 입력하세요 (1-4): ")
+            if user_answer not in ["1", "2", "3", "4"]:
+                print("❌ 잘못된 입력입니다. 1번부터 4번 사이의 숫자를 입력해주세요.")
+
         self.check_answer(user_answer, current_question.answer)
 
-    # 정답을 체크하는 함수
     def check_answer(self, user_answer, correct_answer):
-        if user_answer.lower() == correct_answer.lower():
+        # JSON의 answer는 숫자(int)이므로 문자열로 변환하여 비교
+        if user_answer == str(correct_answer):
             self.score += 1
-            print("정답입니다! ⭕")
+            print("✅ 정답입니다!")
         else:
-            print("틀렸습니다. ❌")
-        print(f"정답은: {correct_answer}")
-        print(f"현재 점수: {self.score}/{self.question_number}\n")
-
+            print("❌ 틀렸습니다.")
+            print(f"정답은 {correct_answer}번이었습니다.")
+        
+        print(f"현재 점수: {self.score}/{self.question_number}")
